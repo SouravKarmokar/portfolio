@@ -6,12 +6,15 @@
   <meta name="description" content="Sourav Karmokar – EEE undergraduate, embedded systems enthusiast, and IEEE-published author based in Dhaka, Bangladesh." />
   <title>Sourav Karmokar</title>
 
+  <!-- Favicon: inline SVG with SK initials — no extra file needed -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%236192f8'/><text x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' font-family='system-ui,sans-serif' font-weight='700' font-size='26' fill='white'>SK</text></svg>" />
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet" />
 
   <style>
-    /* ── Theme tokens ─────────────────────────────────────── */
+    /* ── Theme tokens ──────────────────────────────────────── */
     :root {
       --bg:         #0c0e14;
       --surface:    #13161f;
@@ -25,7 +28,7 @@
       --accent-rgb: 97, 146, 248;
       --green:      #3ecf8e;
       --purple:     #a78bfa;
-      --nav-bg:     rgba(12,14,20,0.88);
+      --nav-bg:     rgba(12,14,20,0.9);
     }
     [data-theme="light"] {
       --bg:         #f4f5fb;
@@ -40,55 +43,50 @@
       --accent-rgb: 59, 111, 232;
       --green:      #1a9e68;
       --purple:     #7248e8;
-      --nav-bg:     rgba(244,245,251,0.92);
+      --nav-bg:     rgba(244,245,251,0.93);
     }
 
-    /* ── Reset ────────────────────────────────────────────── */
+    /* ── Reset ─────────────────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
     body {
       background: var(--bg);
       color: var(--text);
       font-family: 'DM Sans', sans-serif;
-      font-size: 15px;
-      line-height: 1.75;
+      font-size: 16px;
+      line-height: 1.78;
       -webkit-font-smoothing: antialiased;
       transition: background 0.28s, color 0.28s;
+      overflow-x: hidden;
     }
     a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
 
-    /* ── Scrollbar ───────────────────────────────────────── */
-    ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-track { background: var(--bg); }
+    /* ── Scrollbar ─────────────────────────────────────────── */
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
 
-    /* ── Nav ─────────────────────────────────────────────── */
+    /* ── Nav ───────────────────────────────────────────────── */
     nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 200;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 2.5rem;
-      height: 56px;
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 2.5rem; height: 58px;
       background: var(--nav-bg);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
+      backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
       border-bottom: 1px solid var(--border);
       transition: background 0.28s, border-color 0.28s;
     }
-    .nav-links { display: flex; gap: 1.6rem; list-style: none; }
+    .nav-links { display: flex; gap: 1.8rem; list-style: none; }
     .nav-links a {
-      font-size: 0.8rem; font-weight: 500; letter-spacing: 0.4px;
+      font-size: 0.82rem; font-weight: 500; letter-spacing: 0.3px;
       color: var(--muted); transition: color 0.2s;
-      position: relative; padding-bottom: 2px;
+      position: relative; padding-bottom: 3px;
     }
     .nav-links a::after {
-      content: ''; position: absolute; bottom: -2px; left: 0; right: 0;
+      content: ''; position: absolute; bottom: -1px; left: 0; right: 0;
       height: 1px; background: var(--accent);
-      transform: scaleX(0); transform-origin: left;
-      transition: transform 0.22s ease;
+      transform: scaleX(0); transform-origin: left; transition: transform 0.22s ease;
     }
     .nav-links a:hover, .nav-links a.active { color: var(--text); }
     .nav-links a.active::after, .nav-links a:hover::after { transform: scaleX(1); }
@@ -96,9 +94,9 @@
     .nav-right { display: flex; align-items: center; gap: 0.75rem; }
     .theme-toggle {
       background: var(--surface2); border: 1px solid var(--border2);
-      border-radius: 8px; width: 34px; height: 34px;
+      border-radius: 8px; width: 36px; height: 36px;
       display: flex; align-items: center; justify-content: center;
-      cursor: pointer; font-size: 0.95rem; transition: background 0.2s;
+      cursor: pointer; font-size: 1rem; transition: background 0.2s; flex-shrink: 0;
     }
     .theme-toggle:hover { background: var(--border2); }
 
@@ -112,347 +110,434 @@
     }
     .nav-hamburger:hover span { background: var(--text); }
 
+    /* Mobile drawer */
     .mobile-menu {
       display: none; position: fixed;
-      top: 56px; left: 0; right: 0;
+      top: 58px; left: 0; right: 0;
       background: var(--surface); border-bottom: 1px solid var(--border);
-      padding: 1.4rem 2rem; z-index: 199;
+      padding: 1.2rem 1.5rem; z-index: 199;
     }
     .mobile-menu.open { display: block; }
     .mobile-menu a {
-      display: block; padding: 0.65rem 0;
-      font-size: 0.9rem; font-weight: 500; color: var(--muted);
+      display: block; padding: 0.7rem 0; font-size: 0.95rem;
+      font-weight: 500; color: var(--muted);
       border-bottom: 1px solid var(--border); transition: color 0.2s;
     }
     .mobile-menu a:last-child { border-bottom: none; }
     .mobile-menu a:hover { color: var(--text); }
 
-    /* ── Layout ──────────────────────────────────────────── */
-    .container { max-width: 880px; margin: 0 auto; padding: 0 2rem; }
-    section { padding: 6rem 0; }
+    /* ── Layout ─────────────────────────────────────────────── */
+    .container { max-width: 920px; margin: 0 auto; padding: 0 1.5rem; }
+    section { padding: 6.5rem 0; }
+
     .section-tag {
-      display: inline-block; font-size: 0.7rem; font-weight: 600;
-      letter-spacing: 1.5px; text-transform: uppercase;
-      color: var(--accent); margin-bottom: 0.55rem;
+      display: inline-block; font-size: 0.72rem; font-weight: 600;
+      letter-spacing: 1.6px; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 0.6rem;
     }
     h2.section-title {
       font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: clamp(1.55rem, 3vw, 1.95rem); font-weight: 700;
-      color: var(--text); margin-bottom: 2.5rem; letter-spacing: -0.3px;
+      font-size: clamp(1.7rem, 3.5vw, 2.2rem); font-weight: 700;
+      color: var(--text); margin-bottom: 2.8rem; letter-spacing: -0.4px;
     }
     .section-divider { border: none; border-top: 1px solid var(--border); }
 
-    /* ── Animated gradient background on hero ────────────── */
+    /* ── Hero ───────────────────────────────────────────────── */
     #hero {
       min-height: 100vh;
-      display: flex;
-      align-items: center;
-      padding-top: 56px;
-      position: relative;
-      overflow: hidden;
+      display: flex; align-items: center;
+      padding-top: 58px;
+      position: relative; overflow: hidden;
     }
+    /* Ambient glows */
     #hero::before {
-      content: '';
-      position: absolute;
-      width: 600px; height: 600px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(var(--accent-rgb),0.08) 0%, transparent 70%);
-      top: -100px; right: -150px;
-      animation: floatOrb 8s ease-in-out infinite;
-      pointer-events: none;
+      content: ''; position: absolute;
+      width: 700px; height: 700px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(var(--accent-rgb),0.07) 0%, transparent 68%);
+      top: -140px; right: -180px;
+      animation: floatOrb 9s ease-in-out infinite; pointer-events: none;
     }
     #hero::after {
-      content: '';
-      position: absolute;
-      width: 400px; height: 400px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(167,139,250,0.06) 0%, transparent 70%);
-      bottom: 0; left: -100px;
-      animation: floatOrb 10s ease-in-out infinite reverse;
-      pointer-events: none;
+      content: ''; position: absolute;
+      width: 450px; height: 450px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(167,139,250,0.055) 0%, transparent 68%);
+      bottom: -60px; left: -100px;
+      animation: floatOrb 11s ease-in-out infinite reverse; pointer-events: none;
     }
     @keyframes floatOrb {
       0%,100% { transform: translate(0,0) scale(1); }
-      50%      { transform: translate(30px,-40px) scale(1.08); }
+      50%      { transform: translate(28px,-38px) scale(1.07); }
     }
 
+    /* Hero layout: text left, photo top-right aligned */
     .hero-layout {
       display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 3.5rem;
-      align-items: center;
-      position: relative;
-      z-index: 1;
+      grid-template-columns: 1fr 200px;
+      gap: 3rem;
+      align-items: flex-start;    /* photo stays at top */
+      padding-top: 2rem;
+      position: relative; z-index: 1;
     }
-    .hero-inner { display: flex; flex-direction: column; gap: 1.35rem; }
+    .hero-inner { display: flex; flex-direction: column; gap: 1.5rem; padding-top: 0.5rem; }
 
     .hero-badge {
       display: inline-flex; align-items: center; gap: 0.55rem;
-      background: rgba(var(--accent-rgb), 0.08);
-      border: 1px solid rgba(var(--accent-rgb), 0.22);
-      color: var(--accent); font-size: 0.75rem; font-weight: 500;
-      padding: 0.3rem 0.9rem; border-radius: 100px; width: fit-content;
+      background: rgba(var(--accent-rgb),0.08);
+      border: 1px solid rgba(var(--accent-rgb),0.22);
+      color: var(--accent); font-size: 0.76rem; font-weight: 500;
+      padding: 0.32rem 0.95rem; border-radius: 100px; width: fit-content;
     }
     .hero-badge::before {
       content: ''; width: 6px; height: 6px; border-radius: 50%;
-      background: var(--green); animation: pulse 2.2s ease-in-out infinite;
+      background: var(--green); animation: pulse 2.4s ease-in-out infinite;
     }
-    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.25} }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.2} }
 
     .hero-name {
       font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: clamp(2.6rem, 7vw, 4rem); font-weight: 800;
-      line-height: 1.06; color: var(--text); letter-spacing: -1.5px;
+      font-size: clamp(3rem, 8vw, 4.8rem);
+      font-weight: 800; line-height: 1.04;
+      color: var(--text); letter-spacing: -2px;
     }
     .hero-name .dot { color: var(--accent); }
 
     .hero-sub {
-      font-size: 0.97rem; color: var(--muted);
-      max-width: 460px; line-height: 1.82;
+      font-size: 1.05rem; color: var(--muted);
+      max-width: 500px; line-height: 1.82;
     }
 
-    .hero-chips { display: flex; flex-wrap: wrap; gap: 0.45rem; }
+    .hero-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; }
     .chip {
       background: var(--surface2); border: 1px solid var(--border2);
-      color: var(--muted); font-size: 0.76rem;
-      padding: 0.26rem 0.72rem; border-radius: 100px;
+      color: var(--muted); font-size: 0.8rem;
+      padding: 0.3rem 0.8rem; border-radius: 100px;
       transition: border-color 0.2s, color 0.2s;
     }
-    .chip:hover { border-color: rgba(var(--accent-rgb),0.4); color: var(--text); }
+    .chip:hover { border-color: rgba(var(--accent-rgb),0.45); color: var(--text); }
 
-    .hero-actions { display: flex; gap: 0.85rem; flex-wrap: wrap; }
+    .hero-actions { display: flex; gap: 0.85rem; flex-wrap: wrap; align-items: center; }
 
-    /* Photo placeholder */
+    /* Photo — top right, fixed size */
     .hero-photo {
-      width: 175px; height: 215px; border-radius: 18px;
-      border: 2px dashed var(--border2); background: var(--surface2);
-      display: flex; flex-direction: column; align-items: center;
-      justify-content: center; gap: 0.55rem; color: var(--dim);
-      font-size: 0.73rem; text-align: center; flex-shrink: 0; overflow: hidden;
+      width: 190px; height: 230px;
+      border-radius: 18px;
+      border: 2px dashed var(--border2);
+      background: var(--surface2);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 0.55rem; color: var(--dim);
+      font-size: 0.73rem; text-align: center;
+      overflow: hidden; flex-shrink: 0;
+      margin-top: 0.5rem;        /* small top nudge to align with badge row */
     }
-    .hero-photo .ph-icon { font-size: 1.9rem; opacity: 0.45; }
-    .hero-photo .ph-hint { line-height: 1.5; padding: 0 0.8rem; }
+    .hero-photo .ph-icon { font-size: 2rem; opacity: 0.4; }
+    .hero-photo .ph-hint { line-height: 1.55; padding: 0 0.8rem; }
     /*
-      ✏️ TO ADD YOUR PHOTO — replace the contents of .hero-photo with:
+      ✏️ PHOTO: put photo.jpg next to index.html then replace
+      the two divs inside .hero-photo with:
       <img src="photo.jpg" alt="Sourav Karmokar"
            style="width:100%;height:100%;object-fit:cover;" />
     */
 
-    /* ── Buttons ─────────────────────────────────────────── */
+    /* ── Buttons ────────────────────────────────────────────── */
     .btn {
       display: inline-flex; align-items: center; gap: 0.42rem;
-      padding: 0.62rem 1.35rem; border-radius: 8px;
-      font-family: 'DM Sans', sans-serif; font-size: 0.86rem;
+      padding: 0.68rem 1.4rem; border-radius: 9px;
+      font-family: 'DM Sans', sans-serif; font-size: 0.88rem;
       font-weight: 500; cursor: pointer; transition: all 0.18s; border: none;
+      white-space: nowrap;
     }
     .btn-primary { background: var(--accent); color: #fff; }
     .btn-primary:hover { filter: brightness(1.12); transform: translateY(-1px); }
     .btn-ghost { background: transparent; border: 1px solid var(--border2); color: var(--text); }
     .btn-ghost:hover { background: var(--surface2); border-color: var(--dim); transform: translateY(-1px); }
 
-    /* ── About ───────────────────────────────────────────── */
-    .about-body { color: var(--muted); font-size: 0.95rem; line-height: 1.85; max-width: 660px; }
-    .about-body p + p { margin-top: 0.9rem; }
+    /* ── About ──────────────────────────────────────────────── */
+    .about-body { color: var(--muted); font-size: 1rem; line-height: 1.88; max-width: 680px; }
+    .about-body p + p { margin-top: 1rem; }
 
-    /* ── Timeline ────────────────────────────────────────── */
+    /* ── Timeline ───────────────────────────────────────────── */
     .timeline { display: flex; flex-direction: column; }
     .tl-row {
       display: grid;
-      grid-template-columns: 92px 20px 1fr;
-      gap: 0 1.25rem; align-items: start;
+      grid-template-columns: 100px 22px 1fr;
+      gap: 0 1.3rem; align-items: start;
     }
-    .tl-year { font-size: 0.75rem; color: var(--dim); font-weight: 500; padding-top: 0.32rem; text-align: right; line-height: 1.45; }
+    .tl-year {
+      font-size: 0.77rem; color: var(--dim); font-weight: 500;
+      padding-top: 1.1rem; text-align: right; line-height: 1.45;
+    }
     .tl-spine { display: flex; flex-direction: column; align-items: center; }
     .tl-dot {
-      width: 8px; height: 8px; border-radius: 50%;
+      width: 9px; height: 9px; border-radius: 50%;
       background: var(--accent); border: 2px solid var(--bg);
-      outline: 1px solid var(--accent); flex-shrink: 0; margin-top: 0.36rem;
+      outline: 1px solid var(--accent); flex-shrink: 0; margin-top: 1.05rem;
       transition: border-color 0.28s, transform 0.2s;
     }
-    .tl-row:hover .tl-dot { transform: scale(1.35); }
+    .tl-row:hover .tl-dot { transform: scale(1.4); }
     .tl-line { width: 1px; background: var(--border2); flex: 1; min-height: 24px; }
     .tl-last .tl-line { display: none; }
     .tl-content { padding-bottom: 1.8rem; }
     .tl-last .tl-content { padding-bottom: 0; }
-
     .tl-card {
       background: var(--surface); border: 1px solid var(--border);
-      border-radius: 12px; padding: 1.1rem 1.3rem;
+      border-radius: 13px; padding: 1.2rem 1.4rem;
       transition: border-color 0.22s, transform 0.22s;
     }
     .tl-row:hover .tl-card { border-color: rgba(var(--accent-rgb),0.3); transform: translateX(3px); }
+    .tl-org {
+      font-size: 0.73rem; color: var(--accent); font-weight: 600;
+      letter-spacing: 0.5px; margin-bottom: 0.2rem; text-transform: uppercase;
+    }
+    .tl-title { font-size: 0.97rem; font-weight: 600; color: var(--text); margin-bottom: 0.4rem; line-height: 1.4; }
+    .tl-desc  { color: var(--muted); font-size: 0.875rem; line-height: 1.74; }
 
-    .tl-org { font-size: 0.72rem; color: var(--accent); font-weight: 600; letter-spacing: 0.4px; margin-bottom: 0.18rem; text-transform: uppercase; }
-    .tl-title { font-size: 0.93rem; font-weight: 600; color: var(--text); margin-bottom: 0.38rem; line-height: 1.4; }
-    .tl-desc  { color: var(--muted); font-size: 0.84rem; line-height: 1.72; }
-
-    /* Certificate pill — sits inline after description */
+    /* Certificate pill */
     .tl-cert-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      margin-top: 0.75rem;
-      padding: 0.28rem 0.8rem;
-      border-radius: 6px;
-      font-size: 0.78rem;
-      font-weight: 500;
-      cursor: pointer;
-      border: 1px solid var(--border2);
-      background: var(--surface2);
-      color: var(--muted);
+      display: inline-flex; align-items: center; gap: 0.42rem;
+      margin-top: 0.85rem; padding: 0.3rem 0.85rem;
+      border-radius: 6px; font-size: 0.79rem; font-weight: 500;
+      cursor: pointer; border: 1px solid var(--border2);
+      background: var(--surface2); color: var(--muted);
       transition: border-color 0.18s, color 0.18s, background 0.18s;
       user-select: none;
     }
     .tl-cert-pill:hover {
-      border-color: rgba(var(--accent-rgb),0.45);
-      color: var(--accent);
-      background: rgba(var(--accent-rgb),0.07);
+      border-color: rgba(var(--accent-rgb),0.5);
+      color: var(--accent); background: rgba(var(--accent-rgb),0.08);
     }
     .tl-cert-pill svg { width: 13px; height: 13px; flex-shrink: 0; }
-    /*
-      ✏️ TO ACTIVATE A CERTIFICATE PILL:
-      Change onclick="openCert('placeholder')" to onclick="openCert('your-cert.jpg')"
-      and put the image file next to index.html.
-    */
 
-    /* ── Certificate lightbox ────────────────────────────── */
+    /* ── Lightbox ───────────────────────────────────────────── */
     .lightbox-overlay {
-      display: none;
-      position: fixed; inset: 0;
-      background: rgba(0,0,0,0.82);
-      z-index: 500;
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.86); z-index: 500;
       align-items: center; justify-content: center;
-      backdrop-filter: blur(6px);
-      animation: fadeIn 0.18s ease;
+      backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+      padding: 1rem;
     }
-    .lightbox-overlay.open { display: flex; }
-    @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+    .lightbox-overlay.open { display: flex; animation: lbFadeIn 0.18s ease; }
+    @keyframes lbFadeIn { from{opacity:0} to{opacity:1} }
 
     .lightbox-box {
       position: relative;
-      max-width: 90vw; max-height: 88vh;
-      border-radius: 14px; overflow: hidden;
-      background: var(--surface);
-      border: 1px solid var(--border2);
-      animation: zoomIn 0.2s ease;
+      /* Large — fills most of the viewport */
+      width: min(90vw, 900px);
+      max-height: 90vh;
+      border-radius: 16px; overflow: hidden;
+      background: var(--surface); border: 1px solid var(--border2);
+      animation: lbZoom 0.2s ease;
+      display: flex; flex-direction: column;
     }
-    @keyframes zoomIn { from{transform:scale(0.93);opacity:0} to{transform:scale(1);opacity:1} }
+    @keyframes lbZoom { from{transform:scale(0.92);opacity:0} to{transform:scale(1);opacity:1} }
 
-    .lightbox-box img {
-      display: block; max-width: 80vw; max-height: 80vh;
-      object-fit: contain;
+    .lightbox-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0.9rem 1.2rem; border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+    .lightbox-header span { font-size: 0.85rem; font-weight: 600; color: var(--text); }
+    .lightbox-close {
+      width: 30px; height: 30px; border-radius: 7px;
+      background: var(--surface2); border: 1px solid var(--border2);
+      color: var(--muted); font-size: 1.1rem; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.15s, color 0.15s;
+    }
+    .lightbox-close:hover { background: var(--border2); color: var(--text); }
+
+    .lightbox-body {
+      flex: 1; overflow: auto;
+      display: flex; align-items: center; justify-content: center;
+      padding: 1.5rem;
+      min-height: 300px;
+    }
+    .lightbox-body img {
+      max-width: 100%; max-height: calc(90vh - 120px);
+      object-fit: contain; border-radius: 8px;
     }
     .lightbox-placeholder {
-      width: 480px; max-width: 90vw; height: 320px;
       display: flex; flex-direction: column;
-      align-items: center; justify-content: center; gap: 0.6rem;
-      color: var(--dim); font-size: 0.85rem; padding: 2rem; text-align: center;
-    }
-    .lightbox-placeholder .lb-icon { font-size: 2.5rem; opacity: 0.4; }
-
-    .lightbox-close {
-      position: absolute; top: 0.75rem; right: 0.75rem;
-      width: 30px; height: 30px; border-radius: 50%;
-      background: rgba(0,0,0,0.5); border: none; color: #fff;
-      font-size: 1rem; cursor: pointer; display: flex;
       align-items: center; justify-content: center;
-      transition: background 0.15s;
+      gap: 0.7rem; color: var(--dim); font-size: 0.88rem;
+      text-align: center; padding: 3rem 2rem;
     }
-    .lightbox-close:hover { background: rgba(0,0,0,0.8); }
+    .lightbox-placeholder .lb-icon { font-size: 3rem; opacity: 0.35; }
 
-    /* ── Research ────────────────────────────────────────── */
-    .pub-list { display: flex; flex-direction: column; gap: 1.1rem; }
+    /* ── Research ───────────────────────────────────────────── */
+    .pub-list { display: flex; flex-direction: column; gap: 1.2rem; }
     .pub-card {
       background: var(--surface); border: 1px solid var(--border);
-      border-radius: 14px; padding: 1.5rem 1.7rem;
+      border-radius: 14px; padding: 1.6rem 1.8rem;
       transition: border-color 0.2s, transform 0.2s;
     }
     .pub-card:hover { border-color: rgba(var(--accent-rgb),0.4); transform: translateY(-2px); }
-    .pub-meta { display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 0.75rem; }
+    .pub-meta { display: flex; align-items: center; gap: 0.65rem; flex-wrap: wrap; margin-bottom: 0.8rem; }
     .pub-venue {
       display: inline-block;
       background: rgba(167,139,250,0.1); border: 1px solid rgba(167,139,250,0.22);
-      color: var(--purple); font-size: 0.71rem; font-weight: 600;
-      letter-spacing: 0.3px; padding: 0.22rem 0.75rem; border-radius: 100px;
+      color: var(--purple); font-size: 0.73rem; font-weight: 600;
+      letter-spacing: 0.3px; padding: 0.23rem 0.8rem; border-radius: 100px;
     }
-    .pub-year { font-size: 0.74rem; color: var(--dim); }
+    .pub-year { font-size: 0.76rem; color: var(--dim); }
     .pub-title {
       font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 0.95rem; font-weight: 700;
-      color: var(--text); line-height: 1.45; margin-bottom: 0.65rem;
+      font-size: 0.98rem; font-weight: 700;
+      color: var(--text); line-height: 1.48; margin-bottom: 0.7rem;
     }
-    .pub-abstract { color: var(--muted); font-size: 0.83rem; line-height: 1.72; }
+    .pub-abstract { color: var(--muted); font-size: 0.875rem; line-height: 1.75; }
     .pub-read {
-      display: inline-flex; align-items: center; gap: 0.38rem;
-      margin-top: 1rem; font-size: 0.8rem; font-weight: 500;
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      margin-top: 1.1rem; font-size: 0.81rem; font-weight: 500;
       color: var(--accent); border: 1px solid rgba(var(--accent-rgb),0.28);
-      background: rgba(var(--accent-rgb),0.07); padding: 0.3rem 0.9rem;
-      border-radius: 6px; width: fit-content;
+      background: rgba(var(--accent-rgb),0.07); padding: 0.32rem 0.95rem;
+      border-radius: 7px; width: fit-content;
       transition: background 0.18s, border-color 0.18s, transform 0.18s;
     }
     .pub-read:hover { background: rgba(var(--accent-rgb),0.15); border-color: rgba(var(--accent-rgb),0.5); transform: translateY(-1px); }
-    .pub-read.pending { color: var(--dim); border-color: var(--border); background: transparent; pointer-events: none; opacity: 0.5; }
+    .pub-read.pending { color: var(--dim); border-color: var(--border); background: transparent; pointer-events: none; opacity: 0.48; }
 
-    /* ── Skills ──────────────────────────────────────────── */
+    /* ── Skills ─────────────────────────────────────────────── */
     .skills-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
     .skill-group {
       background: var(--surface); border: 1px solid var(--border);
-      border-radius: 12px; padding: 1.2rem 1.4rem;
+      border-radius: 13px; padding: 1.3rem 1.5rem;
       transition: border-color 0.2s, transform 0.2s;
     }
     .skill-group:hover { border-color: rgba(var(--accent-rgb),0.25); transform: translateY(-2px); }
-    .skill-group h3 { font-size: 0.7rem; font-weight: 600; letter-spacing: 1.1px; text-transform: uppercase; color: var(--dim); margin-bottom: 0.85rem; }
-    .skill-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .skill-group h3 {
+      font-size: 0.72rem; font-weight: 600; letter-spacing: 1.1px;
+      text-transform: uppercase; color: var(--dim); margin-bottom: 0.9rem;
+    }
+    .skill-tags { display: flex; flex-wrap: wrap; gap: 0.45rem; }
     .skill-tag {
       background: var(--surface2); border: 1px solid var(--border2);
-      color: var(--muted); font-size: 0.78rem; padding: 0.24rem 0.7rem; border-radius: 6px;
-      transition: border-color 0.18s, color 0.18s;
+      color: var(--muted); font-size: 0.8rem; padding: 0.26rem 0.75rem;
+      border-radius: 6px; transition: border-color 0.18s, color 0.18s;
     }
-    .skill-tag:hover { border-color: rgba(var(--accent-rgb),0.4); color: var(--text); }
+    .skill-tag:hover { border-color: rgba(var(--accent-rgb),0.45); color: var(--text); }
 
-    /* ── Contact ─────────────────────────────────────────── */
-    .contact-intro { color: var(--muted); font-size: 0.95rem; max-width: 500px; margin-bottom: 2.2rem; line-height: 1.8; }
-    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    /* ── Contact ────────────────────────────────────────────── */
+    .contact-intro { color: var(--muted); font-size: 1rem; max-width: 520px; margin-bottom: 2.4rem; line-height: 1.82; }
+    .contact-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: flex-start;
+    }
+
     .contact-card {
-      display: flex; align-items: center; gap: 1rem;
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: 12px; padding: 1.1rem 1.3rem;
-      transition: border-color 0.2s, transform 0.2s;
-    }
-    .contact-card:hover { border-color: rgba(var(--accent-rgb),0.35); transform: translateY(-2px); }
-    .contact-icon {
-      width: 38px; height: 38px; border-radius: 8px;
-      background: rgba(var(--accent-rgb),0.1);
       display: flex; align-items: center; justify-content: center;
-      font-size: 1rem; flex-shrink: 0;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 16px; padding: 1.2rem;
+      width: 72px; height: 72px;
+      transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+      cursor: pointer;
+      position: relative;
     }
-    .contact-label { font-size: 0.7rem; color: var(--dim); margin-bottom: 0.12rem; }
-    .contact-val   { font-size: 0.84rem; font-weight: 500; color: var(--text); }
+    .contact-card:hover {
+      border-color: rgba(var(--accent-rgb),0.45);
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+    }
 
-    /* ── Footer ──────────────────────────────────────────── */
-    footer { border-top: 1px solid var(--border); padding: 2rem; text-align: center; color: var(--dim); font-size: 0.78rem; }
+    /* Tooltip on hover */
+    .contact-card::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      bottom: calc(100% + 8px);
+      left: 50%; transform: translateX(-50%);
+      background: var(--surface2);
+      border: 1px solid var(--border2);
+      color: var(--text);
+      font-size: 0.72rem;
+      font-weight: 500;
+      padding: 0.28rem 0.65rem;
+      border-radius: 6px;
+      white-space: nowrap;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.15s ease;
+    }
+    .contact-card:hover::after { opacity: 1; }
 
-    /* ── Scroll reveal ───────────────────────────────────── */
-    .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.52s ease, transform 0.52s ease; }
-    .reveal.visible { opacity: 1; transform: none; }
-    .reveal-delay-1 { transition-delay: 0.08s; }
-    .reveal-delay-2 { transition-delay: 0.16s; }
-    .reveal-delay-3 { transition-delay: 0.24s; }
+    /* SVG icon */
+    .contact-icon {
+      width: 40px; height: 40px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .contact-icon svg { width: 28px; height: 28px; }
+    .contact-icon.gmail    { background: rgba(234,67,53,0.10);          color: #EA4335; }
+    .contact-icon.whatsapp { background: rgba(37,211,102,0.12);         color: #25D366; }
+    .contact-icon.linkedin { background: rgba(10,102,194,0.15);         color: #0a66c2; }
+    .contact-icon.github   { background: rgba(var(--accent-rgb),0.08);  color: var(--text); }
+    .contact-icon.location { background: rgba(167,139,250,0.12);        color: var(--purple); }
 
-    /* ── Responsive ──────────────────────────────────────── */
-    @media (max-width: 700px) {
-      nav { padding: 0 1.25rem; }
+    [data-theme="light"] .contact-icon.github   { background: rgba(0,0,0,0.07);  color: #24292e; }
+    [data-theme="light"] .contact-icon.gmail    { background: rgba(234,67,53,0.08); }
+    [data-theme="light"] .contact-icon.whatsapp { background: rgba(37,211,102,0.10); }
+
+    /* ── Footer ─────────────────────────────────────────────── */
+    footer { border-top: 1px solid var(--border); padding: 2rem; text-align: center; color: var(--dim); font-size: 0.8rem; }
+
+    /* ── Scroll reveal — re-triggers on scroll up+down ──────── */
+    .reveal {
+      opacity: 0; transform: translateY(24px);
+      transition: opacity 0.55s ease, transform 0.55s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    /* when element leaves viewport going up — reset so it re-animates */
+    .reveal.hidden { opacity: 0; transform: translateY(24px); transition: none; }
+
+    .reveal-d1 { transition-delay: 0.08s; }
+    .reveal-d2 { transition-delay: 0.16s; }
+    .reveal-d3 { transition-delay: 0.24s; }
+    .reveal-d4 { transition-delay: 0.32s; }
+
+    /* ── Mobile responsiveness ──────────────────────────────── */
+    @media (max-width: 768px) {
+      nav { padding: 0 1.2rem; }
       .nav-links { display: none; }
       .nav-hamburger { display: flex; }
-      .container { padding: 0 1.25rem; }
-      section { padding: 4rem 0; }
-      .hero-layout { grid-template-columns: 1fr; }
+      .container { padding: 0 1.1rem; }
+      section { padding: 4.5rem 0; }
+
+      /* Hero: stack vertically, photo hidden on small screens */
+      .hero-layout {
+        grid-template-columns: 1fr;
+        gap: 2rem; padding-top: 1rem;
+      }
       .hero-photo { display: none; }
-      .skills-grid, .contact-grid { grid-template-columns: 1fr; }
+      .hero-name  { font-size: clamp(2.4rem, 11vw, 3.5rem); letter-spacing: -1.5px; }
+      .hero-sub   { font-size: 0.95rem; }
+      .hero-chips { gap: 0.4rem; }
+      .chip       { font-size: 0.75rem; }
+      .hero-actions { flex-wrap: wrap; gap: 0.7rem; }
+      .btn { font-size: 0.84rem; padding: 0.6rem 1.1rem; }
+
+      /* Timeline: tighter columns */
       .tl-row { grid-template-columns: 58px 18px 1fr; gap: 0 0.7rem; }
+      .tl-year { font-size: 0.7rem; padding-top: 1rem; }
+
+      /* Skills: single column */
+      .skills-grid { grid-template-columns: 1fr; }
+
+      /* Contact: 2 cols on tablet, 1 on small */
+      .contact-grid { grid-template-columns: repeat(2, 1fr); }
+
+      /* Pub cards */
+      .pub-card { padding: 1.2rem 1.1rem; }
     }
+
+    @media (max-width: 420px) {
+      .contact-grid { grid-template-columns: 1fr; }
+      .tl-row { grid-template-columns: 50px 16px 1fr; gap: 0 0.55rem; }
+      h2.section-title { font-size: 1.55rem; margin-bottom: 2rem; }
+    }
+
     @media (prefers-reduced-motion: reduce) {
-      .reveal { transition: none; opacity: 1; transform: none; }
+      .reveal, .reveal.hidden { transition: none; opacity: 1; transform: none; }
       .hero-badge::before { animation: none; }
       #hero::before, #hero::after { animation: none; }
     }
@@ -460,7 +545,7 @@
 </head>
 <body>
 
-  <!-- ── Navigation ────────────────────────────────────────── -->
+  <!-- ── Nav ──────────────────────────────────────────────── -->
   <nav>
     <ul class="nav-links">
       <li><a href="#about">About</a></li>
@@ -487,30 +572,34 @@
     <a href="#contact"    onclick="closeMenu()">Contact</a>
   </div>
 
-  <!-- ── Certificate Lightbox ──────────────────────────────── -->
-  <div class="lightbox-overlay" id="lightbox" onclick="closeLightbox(event)">
-    <div class="lightbox-box" id="lightboxBox">
-      <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
-      <div id="lightboxContent"></div>
+  <!-- ── Lightbox ─────────────────────────────────────────── -->
+  <div class="lightbox-overlay" id="lightbox" onclick="closeLightboxBackdrop(event)">
+    <div class="lightbox-box">
+      <div class="lightbox-header">
+        <span id="lightboxTitle">Certificate</span>
+        <button class="lightbox-close" onclick="closeLightbox()" aria-label="Close">✕</button>
+      </div>
+      <div class="lightbox-body" id="lightboxContent"></div>
     </div>
   </div>
 
-  <!-- ── Hero ────────────────────────────────────────────────── -->
+  <!-- ── Hero ─────────────────────────────────────────────── -->
   <section id="hero">
     <div class="container">
       <div class="hero-layout">
-        <div class="hero-inner">
-          <div class="hero-badge reveal">Open to opportunities</div>
 
-          <h1 class="hero-name reveal reveal-delay-1">
+        <div class="hero-inner">
+          <div class="hero-badge reveal">EEE Undergraduate · Dhaka, Bangladesh</div>
+
+          <h1 class="hero-name reveal reveal-d1">
             Sourav<br/>Karmokar<span class="dot">.</span>
           </h1>
 
-          <p class="hero-sub reveal reveal-delay-2">
-            EEE undergraduate at Daffodil International University, interested in embedded systems and solar energy. IEEE-published researcher based in Dhaka, Bangladesh.
+          <p class="hero-sub reveal reveal-d2">
+            Final-year EEE student at Daffodil International University, building interest in embedded systems and solar energy. IEEE-published author actively looking for opportunities to grow as an engineer.
           </p>
 
-          <div class="hero-chips reveal reveal-delay-2">
+          <div class="hero-chips reveal reveal-d2">
             <span class="chip">Embedded Systems</span>
             <span class="chip">STM32</span>
             <span class="chip">Solar Energy</span>
@@ -518,32 +607,47 @@
             <span class="chip">IEEE Author</span>
           </div>
 
-          <div class="hero-actions reveal reveal-delay-3">
+          <div class="hero-actions reveal reveal-d3">
             <!--
-              ✏️ CV BUTTON:
-              1. Put your CV file (e.g. Sourav_CV.pdf) in the same folder as index.html
-              2. The button below will open it in a new tab — no extra hosting needed.
-              3. It already has the correct href; just make sure the filename matches.
+              ✏️ CV BUTTON: rename your CV file to "sourav_cv.pdf"
+              and place it in the same folder as index.html.
+              It will open in a new tab when clicked.
             -->
-            <a href="CV_Sourav_Karmokar__updated.pdf" target="_blank" rel="noopener" class="btn btn-primary">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            <a href="sourav_cv.pdf" target="_blank" rel="noopener" class="btn btn-primary">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
+                   stroke="currentColor" stroke-width="2.2"
+                   stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                <polyline points="14 2 14 8 20 8"/>
+                <line x1="16" y1="13" x2="8" y2="13"/>
+                <line x1="16" y1="17" x2="8" y2="17"/>
+              </svg>
               View CV
             </a>
-            <!-- ✏️ Replace YOUR-LINKEDIN-HERE with your LinkedIn username -->
-            <a href="https://linkedin.com/in/YOUR-LINKEDIN-HERE" target="_blank" rel="noopener" class="btn btn-ghost">LinkedIn ↗</a>
-            <a href="mailto:souravkarmokar.bd@gmail.com" class="btn btn-ghost">Contact</a>
+            <!-- ✏️ Replace YOUR-LINKEDIN-HERE with your LinkedIn username slug -->
+            <a href="https://linkedin.com/in/YOUR-LINKEDIN-HERE"
+               target="_blank" rel="noopener" class="btn btn-ghost">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/>
+              </svg>
+              LinkedIn
+            </a>
+            <!-- Contact scrolls to section -->
+            <a href="#contact" class="btn btn-ghost">Contact</a>
           </div>
         </div>
 
-        <!--
-          ✏️ PHOTO: Replace .hero-photo contents with:
-          <img src="photo.jpg" alt="Sourav Karmokar"
-               style="width:100%;height:100%;object-fit:cover;" />
-        -->
-        <div class="hero-photo reveal">
+        <!-- Photo (top-right) -->
+        <div class="hero-photo reveal reveal-d1">
           <div class="ph-icon">🧑‍💻</div>
           <div class="ph-hint">Add photo.jpg<br/>here</div>
+          <!--
+            ✏️ Replace the two divs above with:
+            <img src="photo.jpg" alt="Sourav Karmokar"
+                 style="width:100%;height:100%;object-fit:cover;" />
+          -->
         </div>
+
       </div>
     </div>
   </section>
@@ -557,23 +661,17 @@
         <span class="section-tag">About</span>
         <h2 class="section-title">A bit about me</h2>
       </div>
-      <div class="about-body reveal">
-        <p>
-          I'm a final-year Electrical &amp; Electronic Engineering student at Daffodil International University with a genuine interest in embedded systems — particularly STM32-based development — and solar energy systems. I enjoy working close to hardware and understanding how things work at the circuit level.
-        </p>
-        <p>
-          During my undergraduate years I contributed to two IEEE-published research projects covering low-power IoT telemetry and robotic teleoperation. These were collaborative efforts that gave me solid exposure to research methodology and technical writing.
-        </p>
-        <p>
-          I recently completed a three-month internship at Walton Hi-Tech Industries PLC in their Strategic Business Development department. I'm now actively looking for opportunities where I can grow as an engineer and contribute to meaningful projects.
-        </p>
+      <div class="about-body reveal reveal-d1">
+        <p>I'm a final-year Electrical &amp; Electronic Engineering student at Daffodil International University with a genuine interest in embedded systems — particularly STM32-based development — and solar energy systems. I enjoy working close to hardware and understanding how things work at the circuit level.</p>
+        <p>During my undergraduate years I contributed to two IEEE-published research projects covering low-power IoT telemetry and robotic teleoperation. These were collaborative efforts that gave me solid exposure to research methodology and technical writing.</p>
+        <p>I recently completed a three-month internship at Walton Hi-Tech Industries PLC in their Strategic Business Development department. I'm now actively looking for opportunities where I can grow as an engineer and contribute to meaningful projects.</p>
       </div>
     </div>
   </section>
 
   <hr class="section-divider" />
 
-  <!-- ── Experience ─────────────────────────────────────────── -->
+  <!-- ── Experience ────────────────────────────────────────── -->
   <section id="experience">
     <div class="container">
       <div class="reveal">
@@ -583,26 +681,19 @@
 
       <div class="timeline">
 
-        <!-- Walton -->
         <div class="tl-row reveal">
-          <div class="tl-year">Feb – May<br/>2026</div>
-          <div class="tl-spine">
-            <div class="tl-dot"></div>
-            <div class="tl-line"></div>
-          </div>
+          <div class="tl-year">Feb–May<br/>2026</div>
+          <div class="tl-spine"><div class="tl-dot"></div><div class="tl-line"></div></div>
           <div class="tl-content">
             <div class="tl-card">
               <div class="tl-org">Walton Hi-Tech Industries PLC</div>
               <div class="tl-title">Intern — Strategic Business Development</div>
-              <div class="tl-desc">
-                Contributed to business development initiatives across a structured 3-month programme at Bashundhara R/A, Dhaka. Worked alongside senior team members and gained exposure to cross-functional operations within a large technology company.
-              </div>
+              <div class="tl-desc">Contributed to business development initiatives across a structured 3-month programme at Bashundhara R/A, Dhaka. Worked alongside senior team members and gained exposure to cross-functional operations within a large technology company.</div>
               <!--
-                ✏️ TO ACTIVATE THIS CERTIFICATE:
-                1. Put walton-cert.jpg next to index.html
-                2. Change onclick="openCert('placeholder')" to onclick="openCert('walton-cert.jpg')"
+                ✏️ CERTIFICATE: put walton-cert.jpg next to index.html
+                then change 'placeholder' to 'walton-cert.jpg' below
               -->
-              <div class="tl-cert-pill" onclick="openCert('placeholder')">
+              <div class="tl-cert-pill" onclick="openCert('placeholder','Walton Internship Certificate')">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 12l2 2 4-4"/></svg>
                 View Certificate
               </div>
@@ -610,24 +701,16 @@
           </div>
         </div>
 
-        <!-- Ulkasemi -->
-        <div class="tl-row reveal">
+        <div class="tl-row reveal reveal-d1">
           <div class="tl-year">Oct 2025</div>
-          <div class="tl-spine">
-            <div class="tl-dot"></div>
-            <div class="tl-line"></div>
-          </div>
+          <div class="tl-spine"><div class="tl-dot"></div><div class="tl-line"></div></div>
           <div class="tl-content">
             <div class="tl-card">
               <div class="tl-org">Ulkasemi Pvt. Limited</div>
               <div class="tl-title">Industrial Attachment — VLSI Design (5-Day)</div>
-              <div class="tl-desc">
-                Introductory exposure to industry-standard VLSI design cycles and physical layout workflows using Cadence Virtuoso.
-              </div>
-              <!--
-                ✏️ TO ACTIVATE: onclick="openCert('ulkasemi-cert.jpg')"
-              -->
-              <div class="tl-cert-pill" onclick="openCert('placeholder')">
+              <div class="tl-desc">Introductory exposure to industry-standard VLSI design cycles and physical layout workflows using Cadence Virtuoso.</div>
+              <!-- ✏️ Change 'placeholder' to 'ulkasemi-cert.jpg' when ready -->
+              <div class="tl-cert-pill" onclick="openCert('placeholder','Ulkasemi Attachment Certificate')">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 12l2 2 4-4"/></svg>
                 View Certificate
               </div>
@@ -635,24 +718,16 @@
           </div>
         </div>
 
-        <!-- BITAC -->
-        <div class="tl-row tl-last reveal">
+        <div class="tl-row tl-last reveal reveal-d2">
           <div class="tl-year">Earlier</div>
-          <div class="tl-spine">
-            <div class="tl-dot"></div>
-            <div class="tl-line"></div>
-          </div>
+          <div class="tl-spine"><div class="tl-dot"></div><div class="tl-line"></div></div>
           <div class="tl-content">
             <div class="tl-card">
               <div class="tl-org">BITAC — Bangladesh Industrial Technical Assistance Center</div>
               <div class="tl-title">Industrial Attachment (1 Month)</div>
-              <div class="tl-desc">
-                Hands-on technical training covering industrial engineering fundamentals and machinery operations.
-              </div>
-              <!--
-                ✏️ TO ACTIVATE: onclick="openCert('bitac-cert.jpg')"
-              -->
-              <div class="tl-cert-pill" onclick="openCert('placeholder')">
+              <div class="tl-desc">Hands-on technical training covering industrial engineering fundamentals and machinery operations.</div>
+              <!-- ✏️ Change 'placeholder' to 'bitac-cert.jpg' when ready -->
+              <div class="tl-cert-pill" onclick="openCert('placeholder','BITAC Attachment Certificate')">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 12l2 2 4-4"/></svg>
                 View Certificate
               </div>
@@ -666,14 +741,13 @@
 
   <hr class="section-divider" />
 
-  <!-- ── Research ───────────────────────────────────────────── -->
+  <!-- ── Research ──────────────────────────────────────────── -->
   <section id="research">
     <div class="container">
       <div class="reveal">
         <span class="section-tag">Research & Publications</span>
         <h2 class="section-title">Published work</h2>
       </div>
-
       <div class="pub-list">
 
         <div class="pub-card reveal">
@@ -681,34 +755,20 @@
             <span class="pub-venue">IEEE QPAIN 2026 · CUET</span>
             <span class="pub-year">April 2026</span>
           </div>
-          <div class="pub-title">
-            A Software-Defined Digital Twin Framework for Enhanced Tele-Laboratory Manipulation in Bio-Hazardous and High-Risk Environments
-          </div>
-          <div class="pub-abstract">
-            A software-defined teleoperation framework for a 4-DOF lab manipulator using a 60 Hz digital twin, with predictive jitter compensation and a collision-safe envelope. Validated across 20 non-expert operators, showing reduced task completion time and safety incidents over conventional teleoperation.
-          </div>
-          <!--
-            ✏️ TO LINK: replace href="#" with your IEEE Xplore URL
-            and remove class "pending"
-          -->
+          <div class="pub-title">A Software-Defined Digital Twin Framework for Enhanced Tele-Laboratory Manipulation in Bio-Hazardous and High-Risk Environments</div>
+          <div class="pub-abstract">A software-defined teleoperation framework for a 4-DOF lab manipulator using a 60 Hz digital twin, with predictive jitter compensation and a collision-safe envelope. Validated across 20 non-expert operators, showing reduced task completion time and safety incidents over conventional teleoperation.</div>
+          <!-- ✏️ Replace href="#" with your IEEE Xplore link, remove class "pending" -->
           <a href="#" class="pub-read pending" aria-disabled="true">📄 IEEE Xplore — link coming soon</a>
         </div>
 
-        <div class="pub-card reveal reveal-delay-1">
+        <div class="pub-card reveal reveal-d1">
           <div class="pub-meta">
             <span class="pub-venue">IEEE WIECON-ECE 2025</span>
             <span class="pub-year">December 2025</span>
           </div>
-          <div class="pub-title">
-            A Low-Cost, Ultra Low-Power, and Scalable LoRa-Based Weather Balloon for Atmospheric Monitoring: A Bangladesh Perspective
-          </div>
-          <div class="pub-abstract">
-            A cost-effective atmospheric telemetry system using ESP32 and LoRa, with a deep-sleep algorithm that extended battery life to 248 hours. Validated over a 10-day ground trial.
-          </div>
-          <!--
-            ✏️ TO LINK: replace href="#" with your IEEE Xplore URL
-            and remove class "pending"
-          -->
+          <div class="pub-title">A Low-Cost, Ultra Low-Power, and Scalable LoRa-Based Weather Balloon for Atmospheric Monitoring: A Bangladesh Perspective</div>
+          <div class="pub-abstract">A cost-effective atmospheric telemetry system using ESP32 and LoRa, with a deep-sleep algorithm that extended battery life to 248 hours. Validated over a 10-day ground trial.</div>
+          <!-- ✏️ Replace href="#" with your IEEE Xplore link, remove class "pending" -->
           <a href="#" class="pub-read pending" aria-disabled="true">📄 IEEE Xplore — link coming soon</a>
         </div>
 
@@ -718,14 +778,13 @@
 
   <hr class="section-divider" />
 
-  <!-- ── Skills ─────────────────────────────────────────────── -->
+  <!-- ── Skills ────────────────────────────────────────────── -->
   <section id="skills">
     <div class="container">
       <div class="reveal">
         <span class="section-tag">Skills</span>
         <h2 class="section-title">What I work with</h2>
       </div>
-
       <div class="skills-grid">
         <div class="skill-group reveal">
           <h3>Microcontrollers & Hardware</h3>
@@ -736,7 +795,7 @@
             <span class="skill-tag">Proteus</span>
           </div>
         </div>
-        <div class="skill-group reveal reveal-delay-1">
+        <div class="skill-group reveal reveal-d1">
           <h3>Engineering Tools</h3>
           <div class="skill-tags">
             <span class="skill-tag">AutoCAD</span>
@@ -744,7 +803,7 @@
             <span class="skill-tag">Cadence Virtuoso (Intro)</span>
           </div>
         </div>
-        <div class="skill-group reveal reveal-delay-2">
+        <div class="skill-group reveal reveal-d2">
           <h3>Focus Areas</h3>
           <div class="skill-tags">
             <span class="skill-tag">Embedded Systems</span>
@@ -753,7 +812,7 @@
             <span class="skill-tag">Renewable Energy</span>
           </div>
         </div>
-        <div class="skill-group reveal reveal-delay-3">
+        <div class="skill-group reveal reveal-d3">
           <h3>Productivity</h3>
           <div class="skill-tags">
             <span class="skill-tag">Microsoft Office</span>
@@ -766,55 +825,87 @@
 
   <hr class="section-divider" />
 
-  <!-- ── Contact ────────────────────────────────────────────── -->
+  <!-- ── Contact ───────────────────────────────────────────── -->
   <section id="contact">
     <div class="container">
       <div class="reveal">
         <span class="section-tag">Contact</span>
         <h2 class="section-title">Let's connect</h2>
       </div>
-      <p class="contact-intro reveal">
-        I'm open to internships, entry-level roles, and research collaborations in embedded systems or electrical engineering. Feel free to reach out.
-      </p>
+      <p class="contact-intro reveal">I'm open to internships, entry-level roles, and research collaborations in embedded systems or electrical engineering. Feel free to reach out.</p>
+
       <div class="contact-grid">
-        <a href="mailto:souravkarmokar.bd@gmail.com" class="contact-card reveal">
-          <div class="contact-icon">✉️</div>
-          <div>
-            <div class="contact-label">Email</div>
-            <div class="contact-val">souravkarmokar.bd@gmail.com</div>
+
+        <a href="mailto:souravkarmokar.bd@gmail.com"
+           class="contact-card reveal"
+           data-tooltip="souravkarmokar.bd@gmail.com">
+          <div class="contact-icon gmail">
+            <!-- Gmail M logo — official multicolour -->
+            <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+              <path fill="#4caf50" d="M45 16.2l-5 2.75-5 4.75V40h7a3 3 0 0 0 3-3V16.2z"/>
+              <path fill="#1e88e5" d="M3 16.2l3.5 2.75L13 23.7V40H6a3 3 0 0 1-3-3V16.2z"/>
+              <path fill="#e53935" d="M35 11.2l-11 8.6-11-8.6L9 8H3l21 15.4L45 8h-6l-4 3.2z"/>
+              <path fill="#c62828" d="M3 8l10 7.73V23.7L3 16.2V8z"/>
+              <path fill="#fbc02d" d="M45 8l-10 7.73V23.7l10-7.5V8z"/>
+            </svg>
           </div>
         </a>
-        <a href="tel:+8801580304494" class="contact-card reveal reveal-delay-1">
-          <div class="contact-icon">📞</div>
-          <div>
-            <div class="contact-label">Phone</div>
-            <div class="contact-val">+880 1580304494</div>
+
+        <a href="https://wa.me/8801580304494"
+           target="_blank" rel="noopener"
+           class="contact-card reveal reveal-d1"
+           data-tooltip="WhatsApp: +880 1580304494">
+          <div class="contact-icon whatsapp">
+            <svg viewBox="0 0 24 24" fill="#25D366" xmlns="http://www.w3.org/2000/svg">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/>
+            </svg>
           </div>
         </a>
-        <!-- ✏️ Replace YOUR-LINKEDIN-HERE -->
-        <a href="https://linkedin.com/in/YOUR-LINKEDIN-HERE" target="_blank" rel="noopener" class="contact-card reveal reveal-delay-2">
-          <div class="contact-icon">💼</div>
-          <div>
-            <div class="contact-label">LinkedIn</div>
-            <div class="contact-val">linkedin.com/in/souravkarmokar</div>
+
+        <!-- ✏️ Replace YOUR-LINKEDIN-HERE with your LinkedIn username -->
+        <a href="https://linkedin.com/in/YOUR-LINKEDIN-HERE"
+           target="_blank" rel="noopener"
+           class="contact-card reveal reveal-d2"
+           data-tooltip="LinkedIn">
+          <div class="contact-icon linkedin">
+            <svg viewBox="0 0 24 24" fill="#0a66c2">
+              <path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/>
+            </svg>
           </div>
         </a>
-        <div class="contact-card reveal reveal-delay-3">
-          <div class="contact-icon">📍</div>
-          <div>
-            <div class="contact-label">Location</div>
-            <div class="contact-val">Dhaka, Bangladesh</div>
+
+        <!-- ✏️ Replace YOUR-GITHUB-HERE with your GitHub username -->
+        <a href="https://github.com/YOUR-GITHUB-HERE"
+           target="_blank" rel="noopener"
+           class="contact-card reveal reveal-d3"
+           data-tooltip="GitHub">
+          <div class="contact-icon github">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
+            </svg>
+          </div>
+        </a>
+
+        <div class="contact-card reveal reveal-d4"
+             style="cursor:default;"
+             data-tooltip="Dhaka, Bangladesh">
+          <div class="contact-icon location">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+              <circle cx="12" cy="10" r="3"/>
+            </svg>
           </div>
         </div>
+
       </div>
     </div>
   </section>
 
   <footer>Sourav Karmokar © 2026</footer>
 
-  <!-- ── Scripts ────────────────────────────────────────────── -->
+  <!-- ── Scripts ───────────────────────────────────────────── -->
   <script>
-    /* ── Theme ─────────────────────────────────────────────── */
+    /* ── Theme ───────────────────────────────────────────── */
     const html = document.documentElement;
     let isDark = true;
     function toggleTheme() {
@@ -825,52 +916,71 @@
       document.querySelectorAll('.tl-dot').forEach(d => d.style.borderColor = bg);
     }
 
-    /* ── Mobile menu ───────────────────────────────────────── */
+    /* ── Mobile menu ─────────────────────────────────────── */
     function toggleMenu() { document.getElementById('mobileMenu').classList.toggle('open'); }
     function closeMenu()  { document.getElementById('mobileMenu').classList.remove('open'); }
+    // close drawer when tapping outside
+    document.addEventListener('click', e => {
+      const menu = document.getElementById('mobileMenu');
+      if (menu.classList.contains('open') &&
+          !menu.contains(e.target) &&
+          !document.querySelector('.nav-hamburger').contains(e.target)) {
+        menu.classList.remove('open');
+      }
+    });
 
-    /* ── Certificate lightbox ──────────────────────────────── */
-    function openCert(src) {
-      const content = document.getElementById('lightboxContent');
+    /* ── Certificate lightbox ────────────────────────────── */
+    function openCert(src, title) {
+      document.getElementById('lightboxTitle').textContent = title || 'Certificate';
+      const body = document.getElementById('lightboxContent');
       if (src === 'placeholder') {
-        content.innerHTML = `
+        body.innerHTML = `
           <div class="lightbox-placeholder">
             <div class="lb-icon">📜</div>
-            <div>Certificate image not added yet.</div>
-            <div style="font-size:0.75rem;margin-top:0.3rem;color:var(--dim)">
-              Put your certificate image next to index.html<br/>
-              and update the onclick attribute in the HTML.
-            </div>
+            <p>Certificate image not uploaded yet.</p>
+            <p style="font-size:0.78rem;margin-top:0.3rem;color:var(--dim);">
+              Put your cert image (e.g. walton-cert.jpg) in the project folder<br/>
+              and update the onclick value in index.html.
+            </p>
           </div>`;
       } else {
-        content.innerHTML = `<img src="${src}" alt="Certificate" />`;
+        body.innerHTML = `<img src="${src}" alt="${title || 'Certificate'}" />`;
       }
       document.getElementById('lightbox').classList.add('open');
       document.body.style.overflow = 'hidden';
     }
-    function closeLightbox(e) {
-      if (!e || e.target === document.getElementById('lightbox') || e.currentTarget.classList.contains('lightbox-close')) {
-        document.getElementById('lightbox').classList.remove('open');
-        document.body.style.overflow = '';
-      }
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('open');
+      document.body.style.overflow = '';
     }
-    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox({target: document.getElementById('lightbox')}); });
+    function closeLightboxBackdrop(e) {
+      if (e.target === document.getElementById('lightbox')) closeLightbox();
+    }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
 
-    /* ── Scroll reveal ─────────────────────────────────────── */
-    const observer = new IntersectionObserver(
-      entries => entries.forEach(e => {
-        if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
-      }),
-      { threshold: 0.07, rootMargin: '0px 0px -32px 0px' }
-    );
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    /* ── Scroll reveal — re-animates every time section enters view ── */
+    const revealEls = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.remove('hidden');
+          // small rAF so transition fires after hidden is removed
+          requestAnimationFrame(() => entry.target.classList.add('visible'));
+        } else {
+          // reset when element scrolls out of view so it re-animates next time
+          entry.target.classList.remove('visible');
+          entry.target.classList.add('hidden');
+        }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+    revealEls.forEach(el => revealObserver.observe(el));
 
-    /* ── Active nav link ───────────────────────────────────── */
+    /* ── Active nav on scroll ────────────────────────────── */
     const sections = document.querySelectorAll('section[id]');
     const navLinks = document.querySelectorAll('.nav-links a');
     window.addEventListener('scroll', () => {
       let current = '';
-      sections.forEach(s => { if (window.scrollY >= s.offsetTop - 90) current = s.id; });
+      sections.forEach(s => { if (window.scrollY >= s.offsetTop - 100) current = s.id; });
       navLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + current));
     }, { passive: true });
   </script>
