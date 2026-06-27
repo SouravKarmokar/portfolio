@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -590,7 +590,7 @@
           </h1>
 
           <p class="hero-sub reveal reveal-d2">
-            Final-year EEE student at Daffodil International University, building interest in embedded systems and solar energy. IEEE-published author actively looking for opportunities to grow as an engineer.
+            Final-year Electrical and Electronic Engineering student at Daffodil International University with a growing interest in embedded systems, renewable energy, and intelligent engineering solutions. IEEE-published author seeking opportunities to apply technical knowledge, contribute to impactful projects, and grow as an engineer.
           </p>
 
           <div class="hero-chips reveal reveal-d2">
@@ -830,9 +830,10 @@
 
       <div class="contact-grid">
 
-        <a href="mailto:souravkarmokar.bd@gmail.com"
-           class="contact-card reveal"
-           data-tooltip="souravkarmokar.bd@gmail.com">
+        <div class="contact-card reveal"
+             onclick="copyEmail()"
+             role="button" tabindex="0"
+             data-tooltip="Click to copy email">
           <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
             <path fill="#4caf50" d="M45 16.2l-5 2.75-5 4.75V40h7a3 3 0 0 0 3-3V16.2z"/>
             <path fill="#1e88e5" d="M3 16.2l3.5 2.75L13 23.7V40H6a3 3 0 0 1-3-3V16.2z"/>
@@ -840,7 +841,18 @@
             <path fill="#c62828" d="M3 8l10 7.73V23.7L3 16.2V8z"/>
             <path fill="#fbc02d" d="M45 8l-10 7.73V23.7l10-7.5V8z"/>
           </svg>
-        </a>
+        </div>
+
+        <!-- Email copied toast -->
+        <div id="emailToast" style="
+          position:fixed; bottom:2rem; left:50%; transform:translateX(-50%) translateY(12px);
+          background:#1a1e2b; color:#dce0f0; font-size:0.82rem; font-weight:500;
+          padding:0.55rem 1.2rem; border-radius:8px; border:1px solid #2d3248;
+          box-shadow:0 6px 20px rgba(0,0,0,0.3);
+          opacity:0; pointer-events:none;
+          transition:opacity 0.2s ease, transform 0.2s ease;
+          z-index:999; white-space:nowrap;
+        ">✅ Email copied!</div>
 
         <a href="https://wa.me/8801580304494"
            target="_blank" rel="noopener"
@@ -891,13 +903,32 @@
   <script>
     /* ── Theme ───────────────────────────────────────────── */
     const html = document.documentElement;
-    let isDark = true;
+    let isDark = false;   // starts in light mode
+    // set correct icon on load
+    document.getElementById('theme-icon').textContent = '🌙';
     function toggleTheme() {
       isDark = !isDark;
       html.setAttribute('data-theme', isDark ? 'dark' : 'light');
       document.getElementById('theme-icon').textContent = isDark ? '☀️' : '🌙';
       const bg = getComputedStyle(html).getPropertyValue('--bg').trim();
       document.querySelectorAll('.tl-dot').forEach(d => d.style.borderColor = bg);
+    }
+
+    /* ── Copy email to clipboard ─────────────────────────── */
+    function copyEmail() {
+      const email = 'souravkarmokar.bd@gmail.com';
+      navigator.clipboard.writeText(email).then(() => {
+        const toast = document.getElementById('emailToast');
+        toast.style.opacity = '1';
+        toast.style.transform = 'translateX(-50%) translateY(0)';
+        setTimeout(() => {
+          toast.style.opacity = '0';
+          toast.style.transform = 'translateX(-50%) translateY(12px)';
+        }, 2200);
+      }).catch(() => {
+        // fallback: open Gmail compose in browser
+        window.open('https://mail.google.com/mail/?view=cm&to=souravkarmokar.bd@gmail.com', '_blank');
+      });
     }
 
     /* ── Mobile menu ─────────────────────────────────────── */
