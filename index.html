@@ -590,7 +590,7 @@
           </h1>
 
           <p class="hero-sub reveal reveal-d2">
-            Final-year Electrical and Electronic Engineering student at Daffodil International University. IEEE-published author with interests in embedded systems and renewable energy, seeking opportunities to develop practical engineering skills and contribute to meaningful technological solutions.
+            Final-year EEE student at Daffodil International University, building interest in embedded systems and solar energy. IEEE-published author actively looking for opportunities to grow as an engineer.
           </p>
 
           <div class="hero-chips reveal reveal-d2">
@@ -999,156 +999,38 @@
       navLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + current));
     }, { passive: true });
 
-    /* ── Circuit routing cursor trail ───────────────────────
-       Draws fading PCB-style orthogonal (right-angle) traces
-       behind the cursor — like routing wires in KiCad/Altium.
-       Fully non-blocking: canvas sits behind all content,
-       pointer-events disabled, hidden on touch/mobile.
+    /* ── Cursor: EDA-style precision crosshair ──────────────
+       A static SVG crosshair — like KiCad / Altium cursor.
+       Tiny center dot + four short lines. No animation.
+       Changes to a pointer hand on interactive elements.
+       Skipped entirely on touch devices.
     ──────────────────────────────────────────────────────── */
-    (function() {
-      // skip on touch-only devices — cursor doesn't exist there
+    (function () {
       if (window.matchMedia('(hover: none)').matches) return;
 
-      const canvas = document.createElement('canvas');
-      canvas.id = 'circuitCanvas';
-      Object.assign(canvas.style, {
-        position:      'fixed',
-        top:           '0',
-        left:          '0',
-        width:         '100%',
-        height:        '100%',
-        pointerEvents: 'none',   // never intercepts clicks
-        zIndex:        '9999',
-        opacity:       '1',
-      });
-      document.body.appendChild(canvas);
+      // Build SVG crosshair — 32×32, center at 16,16
+      // Lines: 4px gap around center dot, 8px arms
+      const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'>
+        <circle cx='16' cy='16' r='2' fill='%236192f8'/>
+        <!-- top -->    <line x1='16' y1='2'  x2='16' y2='11' stroke='%236192f8' stroke-width='1.5' stroke-linecap='round'/>
+        <!-- bottom --> <line x1='16' y1='21' x2='16' y2='30' stroke='%236192f8' stroke-width='1.5' stroke-linecap='round'/>
+        <!-- left -->   <line x1='2'  y1='16' x2='11' y2='16' stroke='%236192f8' stroke-width='1.5' stroke-linecap='round'/>
+        <!-- right -->  <line x1='21' y1='16' x2='30' y2='16' stroke='%236192f8' stroke-width='1.5' stroke-linecap='round'/>
+      </svg>`;
+      const encoded = `url("data:image/svg+xml,${svg}") 16 16, crosshair`;
 
-      const ctx = canvas.getContext('2d');
-      let W = canvas.width  = window.innerWidth;
-      let H = canvas.height = window.innerHeight;
+      // Pointer hand for interactive elements
+      const hand = `url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'><circle cx='16' cy='16' r='2' fill='%236192f8'/><line x1='16' y1='2' x2='16' y2='11' stroke='%236192f8' stroke-width='1.5' stroke-linecap='round'/><line x1='16' y1='21' x2='16' y2='30' stroke='%236192f8' stroke-width='1.5' stroke-linecap='round'/><line x1='2' y1='16' x2='11' y2='16' stroke='%236192f8' stroke-width='1.5' stroke-linecap='round'/><line x1='21' y1='16' x2='30' y2='16' stroke='%236192f8' stroke-width='1.5' stroke-linecap='round'/></svg>") 16 16, pointer`;
 
-      window.addEventListener('resize', () => {
-        W = canvas.width  = window.innerWidth;
-        H = canvas.height = window.innerHeight;
-      }, { passive: true });
-
-      // Each segment: { x1,y1,x2,y2, alpha }
-      const segments = [];
-      const MAX_SEGS   = 28;   // how many segments stay visible
-      const FADE_SPEED = 0.022; // how fast they fade out
-
-      let mouseX = -999, mouseY = -999;
-      let prevX  = -999, prevY  = -999;
-      let midX   = -999, midY  = -999; // the elbow of the right-angle
-
-      // dot at cursor tip
-      let dotX = -999, dotY = -999;
-
-      window.addEventListener('mousemove', e => {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-      }, { passive: true });
-
-      function getAccentColor() {
-        // reads the current --accent from whichever theme is active
-        return getComputedStyle(document.documentElement)
-          .getPropertyValue('--accent').trim() || '#6192f8';
-      }
-
-      // Parse hex/rgb accent to r,g,b for rgba()
-      function hexToRGB(hex) {
-        hex = hex.replace('#','');
-        if (hex.length === 3) hex = hex.split('').map(c=>c+c).join('');
-        const n = parseInt(hex, 16);
-        return [(n>>16)&255, (n>>8)&255, n&255];
-      }
-
-      let lastPush = 0;
-
-      function loop(ts) {
-        ctx.clearRect(0, 0, W, H);
-
-        const accent = getAccentColor();
-        let r=97, g=146, b=248;
-        try {
-          if (accent.startsWith('#')) [r,g,b] = hexToRGB(accent);
-        } catch(_) {}
-
-        // Add new segment only when mouse moved enough and enough time passed
-        const dist = Math.hypot(mouseX - prevX, mouseY - prevY);
-        if (dist > 6 && ts - lastPush > 30 && prevX !== -999) {
-          // right-angle routing: go horizontal first, then vertical
-          // elbow at (mouseX, prevY)
-          midX = mouseX;
-          midY = prevY;
-
-          segments.push({ x1:prevX, y1:prevY, x2:midX, y2:midY, alpha:1 });
-          segments.push({ x1:midX, y1:midY, x2:mouseX, y2:mouseY, alpha:1 });
-
-          // tiny via dot at the elbow
-          segments.push({ via:true, x:midX, y:midY, alpha:1 });
-
-          prevX = mouseX;
-          prevY = mouseY;
-          lastPush = ts;
-
-          // trim oldest
-          while (segments.length > MAX_SEGS * 3) segments.shift();
-        }
-
-        if (prevX === -999 && mouseX !== -999) {
-          prevX = mouseX; prevY = mouseY;
-        }
-
-        // Draw and fade segments
-        for (let i = segments.length - 1; i >= 0; i--) {
-          const s = segments[i];
-          s.alpha -= FADE_SPEED;
-          if (s.alpha <= 0) { segments.splice(i, 1); continue; }
-
-          ctx.globalAlpha = s.alpha * 0.55; // max 55% opacity — stays subtle
-
-          if (s.via) {
-            // small filled circle = PCB via
-            ctx.beginPath();
-            ctx.arc(s.x, s.y, 2.5, 0, Math.PI * 2);
-            ctx.fillStyle = `rgb(${r},${g},${b})`;
-            ctx.fill();
-          } else {
-            // trace line
-            ctx.beginPath();
-            ctx.moveTo(s.x1, s.y1);
-            ctx.lineTo(s.x2, s.y2);
-            ctx.strokeStyle = `rgb(${r},${g},${b})`;
-            ctx.lineWidth   = 1.5;
-            ctx.lineCap     = 'square'; // PCB traces have square ends
-            ctx.stroke();
-          }
-        }
-
-        // Cursor tip dot — small crosshair-style dot
-        if (mouseX !== -999) {
-          ctx.globalAlpha = 0.7;
-          ctx.beginPath();
-          ctx.arc(mouseX, mouseY, 3, 0, Math.PI * 2);
-          ctx.fillStyle = `rgb(${r},${g},${b})`;
-          ctx.fill();
-
-          // tiny crosshair lines
-          ctx.globalAlpha = 0.35;
-          ctx.strokeStyle = `rgb(${r},${g},${b})`;
-          ctx.lineWidth   = 1;
-          ctx.beginPath();
-          ctx.moveTo(mouseX - 8, mouseY); ctx.lineTo(mouseX + 8, mouseY);
-          ctx.moveTo(mouseX, mouseY - 8); ctx.lineTo(mouseX, mouseY + 8);
-          ctx.stroke();
-        }
-
-        ctx.globalAlpha = 1;
-        requestAnimationFrame(loop);
-      }
-
-      requestAnimationFrame(loop);
+      const style = document.createElement('style');
+      style.textContent = `
+        * { cursor: ${encoded}; }
+        a, button, [role="button"], .tl-cert-pill,
+        .contact-card, .theme-toggle, .nav-hamburger,
+        .pub-read, .btn, .chip, .skill-tag, .nav-links a
+        { cursor: ${hand}; }
+      `;
+      document.head.appendChild(style);
     })();
   </script>
 
